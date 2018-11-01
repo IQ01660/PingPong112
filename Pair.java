@@ -1,3 +1,4 @@
+import java.lang.Math;
 /** 
  * the class is used to interpret 
  * properties having x and y components
@@ -6,8 +7,8 @@
  */
 public class Pair {
 	//variables
-	private double x; //individual x coordinate
-	private double y; //individual y coordinate
+	public double x; //individual x coordinate
+	public double y; //individual y coordinate
 	
 	public Pair(double _x, double _y) {
 		this.x = _x;
@@ -56,5 +57,12 @@ public class Pair {
 		double finalX = this.x * _multiple;
 		double finalY = this.y * _multiple;
 		return new Pair(finalX, finalY);
+	}
+	/**
+	 * Gives you the length of the 2D vector
+	 * @return magnitude
+	 */
+	public double getMagnitude() {
+		return Math.sqrt(this.x*this.x + this.y*this.y);
 	}
 }
