@@ -3,8 +3,8 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class Ball extends MovingObject implements WindowInfo{
-	public final static double INITIAL_SPEED = 400;
-	public final static double RADIUS = 20;
+	public final static double INITIAL_SPEED = 550;
+	public final static double RADIUS = 15;
 	private Random rand = new Random();
 	
 	public Color ballColor = Color.ORANGE;

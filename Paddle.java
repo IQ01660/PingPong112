@@ -8,9 +8,10 @@ public class Paddle extends MovingObject implements WindowInfo, KeyListener{
 	public final static double WIDTH = 10;
 	public final static double HEIGHT = 150;
 	private final static double SPEED = 300;
+	private final static double DISTANCE_TO_WALL = 0;
 	
 	private boolean side;//shows => the right or left paddle
-	public Color paddleColor = Color.BLUE;
+	public Color paddleColor = new Color (17, 29, 196, 150);
 	private Random rand = new Random();
 	/**
 	 * Input false if the paddle is on 
@@ -22,11 +23,11 @@ public class Paddle extends MovingObject implements WindowInfo, KeyListener{
 		//determining if the paddle's on the left or right
 		double xPos;
 		if (side == true) {
-			xPos = WindowInfo.WINDOW_WIDTH - (WIDTH/2);
+			xPos = WindowInfo.WINDOW_WIDTH - (WIDTH/2) - DISTANCE_TO_WALL;
 			this.side = true;
 		}
 		else {
-			xPos = WIDTH/2;
+			xPos = WIDTH/2 + DISTANCE_TO_WALL;
 			this.side = false;
 		}
 		//giving the initial position to paddle (y is random)
@@ -44,10 +45,10 @@ public class Paddle extends MovingObject implements WindowInfo, KeyListener{
 		// TODO Auto-generated method stub
 		char typedKey = e.getKeyChar();
 		if(this.side == false) {
-			this.changeVelocityControls(typedKey, 'r', 'f', 'v');
+			this.changeVelocityControls(typedKey, 'r', 'v', 'f');
 		}
 		else {
-			this.changeVelocityControls(typedKey, 'u', 'j', 'n');
+			this.changeVelocityControls(typedKey, 'u', 'n', 'j');
 		}
 	}
 	private void changeVelocityControls(char _typed,char _up, char _down, char _stop) {

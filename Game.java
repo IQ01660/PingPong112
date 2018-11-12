@@ -22,7 +22,7 @@ public class Game{
 		
 	}
 	private boolean isLeftBounced() {
-		if( (this.leftPaddle.getPosition().x + Paddle.WIDTH/2 >= this.pongBall.getPosition().x - Ball.RADIUS) &&
+		if( (this.leftPaddle.getPosition().x + Paddle.WIDTH/2 + 10 >= this.pongBall.getPosition().x - Ball.RADIUS) &&
 		    (this.leftPaddle.getPosition().y - Paddle.HEIGHT/2 < this.pongBall.getPosition().y + Ball.RADIUS &&
 		    		this.leftPaddle.getPosition().y + Paddle.HEIGHT/2 > this.pongBall.getPosition().y - Ball.RADIUS) ){
 			return true;
@@ -32,7 +32,7 @@ public class Game{
 		}
 	}
 	private boolean isRightBounced() {
-		if( (this.rightPaddle.getPosition().x - Paddle.WIDTH/2 <= this.pongBall.getPosition().x + Ball.RADIUS) &&
+		if( (this.rightPaddle.getPosition().x - Paddle.WIDTH/2 - 10 <= this.pongBall.getPosition().x + Ball.RADIUS) &&
 			    (this.rightPaddle.getPosition().y - Paddle.HEIGHT/2 < this.pongBall.getPosition().y + Ball.RADIUS &&
 			    		this.rightPaddle.getPosition().y + Paddle.HEIGHT/2 > this.pongBall.getPosition().y - Ball.RADIUS) ){
 				return true;
@@ -90,23 +90,25 @@ public class Game{
 	public void drawScore(Graphics g) {
 		this.scoreUpdate();
 		if(this.leftScore >= 10) {
-			g.setColor(Color.PINK);
+			g.setColor(new Color(31, 115, 145));
 	        g.fillRect(0, 0, (int) WindowInfo.WINDOW_WIDTH, (int) WindowInfo.WINDOW_HEIGHT);
 	        g.setColor(Color.BLUE);
-	        //g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-			g.drawString("Left player wins", (int)WindowInfo.WINDOW_WIDTH/2 - 100, (int)WindowInfo.WINDOW_HEIGHT - 50);
+	        g.setFont(new Font("Monospaced", Font.PLAIN, 40)); 
+			g.drawString("Left player wins", (int)WindowInfo.WINDOW_WIDTH/2 - 100, (int)WindowInfo.WINDOW_HEIGHT/2 - 50);
 		}
-		if(this.rightScore >= 10) {
-			g.setColor(Color.PINK);
+		else if(this.rightScore >= 10) {
+			g.setColor(new Color(31, 115, 145));
 	        g.fillRect(0, 0, (int) WindowInfo.WINDOW_WIDTH, (int) WindowInfo.WINDOW_HEIGHT);
 	        g.setColor(Color.BLUE);
-	        //g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-			g.drawString("Right player wins", (int)WindowInfo.WINDOW_WIDTH/2 - 100, (int)WindowInfo.WINDOW_HEIGHT - 50);
+	        g.setFont(new Font("Monospaced", Font.PLAIN, 40)); 
+			g.drawString("Right player wins", (int)WindowInfo.WINDOW_WIDTH/2 - 100, (int)WindowInfo.WINDOW_HEIGHT/2 - 50);
 		}
 		else {
-			g.setColor(Color.GREEN);
-			//g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-			g.drawString(this.leftScore + "   " + this.rightScore, (int)WindowInfo.WINDOW_WIDTH/2 - 35, (int)WindowInfo.WINDOW_HEIGHT - 50);
+			g.setColor(new Color(211, 46, 202, 127));
+			g.fillRect((int)WindowInfo.WINDOW_WIDTH/2 - 75, (int)WindowInfo.WINDOW_HEIGHT - 100, 150, 100);
+			g.setColor(new Color(66, 244, 215));
+			g.setFont(new Font("Monospaced", Font.PLAIN, 40)); 
+			g.drawString(this.leftScore + " " + this.rightScore, (int)WindowInfo.WINDOW_WIDTH/2 - 35, (int)WindowInfo.WINDOW_HEIGHT - 50);
 		}
 	}
 }

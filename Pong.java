@@ -4,18 +4,23 @@
  */
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class Pong extends JPanel implements WindowInfo{
+public class Pong extends JPanel implements WindowInfo, KeyListener{
 	private static final int FPS = 60;
 	private Game pongGame;
 	private Ball pongBall;
 	private Paddle leftPaddle;
 	private Paddle rightPaddle;
 	private int ringRadius = 20;
+	private boolean didGameStart = false;
 	
 	public Pong() {
 		pongBall = new Ball();
@@ -25,6 +30,7 @@ public class Pong extends JPanel implements WindowInfo{
 		
 		this.addKeyListener(leftPaddle);
 		this.addKeyListener(rightPaddle);
+		this.addKeyListener(this);
 		this.setPreferredSize(new Dimension((int)WindowInfo.WINDOW_WIDTH, (int)WindowInfo.WINDOW_HEIGHT));
 		Thread mainThread = new Thread(new Runner());
 		mainThread.start();
@@ -44,7 +50,7 @@ public class Pong extends JPanel implements WindowInfo{
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);            
         //draw here
-        g.setColor(Color.BLACK);
+        g.setColor(new Color(31, 115, 145));
         g.fillRect(0, 0, (int) WindowInfo.WINDOW_WIDTH, (int) WindowInfo.WINDOW_HEIGHT);
         g.setColor(Color.WHITE);
         g.drawLine((int)WindowInfo.WINDOW_WIDTH/2, 0, (int)WindowInfo.WINDOW_WIDTH/2, (int)WindowInfo.WINDOW_HEIGHT);
@@ -53,6 +59,11 @@ public class Pong extends JPanel implements WindowInfo{
         leftPaddle.drawPaddle(g);
         rightPaddle.drawPaddle(g);
         pongGame.drawScore(g);
+        if (this.didGameStart == false) {
+        	g.setColor(Color.ORANGE);
+        	g.setFont(new Font("Monospaced", Font.PLAIN, 30));
+        	g.drawString("Press ENTER to begin",(int) WindowInfo.WINDOW_WIDTH/2, 100);
+        }
     }    
 	class Runner implements Runnable {
 		@Override
@@ -60,10 +71,13 @@ public class Pong extends JPanel implements WindowInfo{
 			// TODO Auto-generated method stub
 			double timeSpan = 1.0/(double)FPS;
 			while(true) {
-				pongBall.move(timeSpan);
-				leftPaddle.move(timeSpan);
-				rightPaddle.move(timeSpan);
-				pongGame.bounce();
+				if(didGameStart == true) {
+					pongBall.move(timeSpan);
+					leftPaddle.move(timeSpan);
+					rightPaddle.move(timeSpan);
+					pongGame.bounce();
+				}
+				
 				repaint();
 				try {
 					Thread.sleep(1000/FPS);
@@ -71,6 +85,22 @@ public class Pong extends JPanel implements WindowInfo{
 				catch(InterruptedException e){}
 			}
 		}
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_ENTER && this.didGameStart == false) {
+			this.didGameStart = true;
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }
